@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#120305">
+<title>Lahiru &amp; Poornima — Engagement Ceremony</title>
+<style>
+:root {
+  --bg: #120305;          /* Deep Burgundy Background */
+  --panel: rgba(36, 8, 12, 0.72); /* Translucent Rich Burgundy Panel */
+  --gold: #c5a059;        /* Antique Gold Accent */
+  --gold2: #e5c983;       /* Warm Soft Gold */
+  --beige: #f5f0eb;       /* Soft Beige Text */
+  --muted: #d1c2b4;       /* Warm Muted Beige */
+  --line: rgba(197, 160, 89, 0.35);
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--beige);
+  font-family: Georgia, "Times New Roman", serif;
+}
+body { overflow-x: hidden; }
+button { font: inherit; }
+.app { min-height: 100vh; position: relative; overflow: hidden; }
+
+/* ROMANTIC ANIMATED BACKGROUND */
+.romantic-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 30%, #3a0d18 0%, #1a0508 60%, #0d0204 100%);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.romantic-svg {
+  width: 100%;
+  height: 100%;
+  max-width: 800px;
+  object-fit: cover;
+  position: absolute;
+  bottom: 0;
+}
+
+/* Animations for Romantic SVG elements */
+@keyframes swayCouple {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(1.2deg); }
+}
+
+@keyframes pulseMoon {
+  0%, 100% { filter: drop-shadow(0 0 25px rgba(229, 201, 131, 0.4)); }
+  50% { filter: drop-shadow(0 0 45px rgba(229, 201, 131, 0.7)); }
+}
+
+@keyframes pulseCenterHeart {
+  0%, 100% { transform: scale(1) translateY(0); opacity: 0.85; }
+  50% { transform: scale(1.18) translateY(-4px); opacity: 1; }
+}
+
+@keyframes twinkleStar {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+.anim-couple {
+  transform-origin: bottom center;
+  animation: swayCouple 5s ease-in-out infinite;
+}
+
+.anim-moon {
+  animation: pulseMoon 4s ease-in-out infinite;
+}
+
+.anim-center-heart {
+  transform-origin: center;
+  animation: pulseCenterHeart 2s ease-in-out infinite;
+}
+
+.star {
+  animation: twinkleStar var(--duration, 3s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+.noise {
+  position: fixed;
+  inset: 0;
+  opacity: .03;
+  z-index: 1;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.p {
+  position: absolute;
+  color: var(--gold2);
+  opacity: 0;
+  animation: floatHeart 9s linear infinite;
+  font-family: Georgia, serif;
+  text-shadow: 0 4px 20px rgba(197,160,89,.6);
+}
+
+@keyframes floatHeart {
+  0% { transform: translateY(110vh) rotate(-12deg) scale(.6); opacity: 0; }
+  15% { opacity: .75; }
+  70% { opacity: .55; }
+  100% { transform: translateY(-12vh) rotate(16deg) scale(1.2); opacity: 0; }
+}
+
+/* CURTAIN STAGE */
+.curtain-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  transition: opacity 0.8s ease-out, visibility 0.8s;
+  cursor: pointer;
+}
+
+.curtain-top-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 35px;
+  background: linear-gradient(90deg, #7a602c, #e5c983, #7a602c);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.9);
+  z-index: 10002;
+}
+
+.curtain {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 51.5vw;
+  z-index: 10000;
+  background: 
+    linear-gradient(to bottom, rgba(0,0,0,0.6), transparent 25%),
+    repeating-linear-gradient(
+        90deg,
+        #0d0204 0px,
+        #24080c 20px,
+        #3d0e14 45px,
+        #24080c 70px,
+        #0d0204 90px
+    );
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.9);
+  transition: transform 2.2s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.curtain.left { left: 0; transform-origin: left center; border-right: 2px solid #050001; }
+.curtain.right { right: 0; transform-origin: right center; border-left: 2px solid #050001; }
+
+.curtain-stage.opened .curtain.left { transform: translateX(-100%); }
+.curtain-stage.opened .curtain.right { transform: translateX(100%); }
+
+.curtain-center {
+  position: relative;
+  z-index: 10001;
+  text-align: center;
+  color: var(--beige);
+  transition: opacity .5s;
+  pointer-events: none;
+}
+
+.curtain-stage.opened .curtain-center { opacity: 0; }
+.curtain-orn { font-size: 34px; color: var(--gold); margin-bottom: 12px; }
+.curtain-label { font-size: 11px; letter-spacing: 5px; text-transform: uppercase; color: var(--gold2); }
+.curtain-names { font-size: clamp(38px, 10vw, 68px); font-weight: 400; color: var(--gold2); margin: 14px 0 24px; }
+.curtain-names span { font-size: .42em; color: var(--gold); margin: 0 9px; }
+
+.touch-hint {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 12px 28px;
+  border: 1px solid var(--gold);
+  background: linear-gradient(135deg, #7a602c, #c5a059);
+  color: #120305;
+  font-weight: bold;
+  border-radius: 999px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 11px;
+  box-shadow: 0 8px 28px rgba(0,0,0,.5);
+  animation: pulse 1.8s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.98); opacity: 0.85; }
+  50% { transform: scale(1.03); opacity: 1; }
+  100% { transform: scale(0.98); opacity: 0.85; }
+}
+
+/* CONTENT CONTAINER */
+.content-wrapper {
+  position: relative;
+  z-index: 10;
+  min-height: 100vh;
+}
+
+/* COVER CARD */
+.cover {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+  text-align: center;
+  transition: opacity .8s, transform .8s;
+}
+
+.cover.hide {
+  opacity: 0;
+  transform: scale(1.04);
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+}
+
+.cover-card {
+  width: min(520px, 100%);
+  padding: 42px 26px;
+  border: 1px solid var(--line);
+  background: rgba(26, 6, 9, 0.65); /* Translucent so background shows through */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 25px 80px rgba(0,0,0,.6);
+  border-radius: 28px;
+}
+
+.orn { color: var(--gold); letter-spacing: 7px; font-size: 12px; margin-bottom: 25px; }
+.eyebrow { font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: var(--muted); }
+.names { font-size: clamp(44px, 12vw, 76px); line-height: .95; margin: 18px 0; color: var(--gold2); font-weight: 400; }
+.and { font-size: 24px; color: var(--beige); display: block; margin: 10px 0; }
+.sub { color: var(--muted); font-size: 15px; line-height: 1.7; }
+
+.open-btn {
+  margin-top: 30px;
+  border: 1px solid var(--gold);
+  background: linear-gradient(135deg, #c5a059, #7a602c);
+  color: #120305;
+  font-weight: bold;
+  border-radius: 999px;
+  padding: 14px 28px;
+  letter-spacing: 2px;
+  font-size: 12px;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 8px 30px rgba(0,0,0,.5);
+}
+
+/* MAIN INVITATION CONTENT */
+.invite {
+  max-width: 720px;
+  margin: auto;
+  position: relative;
+  padding: 26px 18px 70px;
+  opacity: 0;
+  transform: translateY(25px);
+  pointer-events: none;
+  transition: opacity .8s, transform .8s;
+}
+
+.invite.show {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.invite:before {
+  content: "";
+  position: absolute;
+  inset: 10px 8px 25px;
+  border: 1px solid rgba(197, 160, 89, 0.3);
+  border-radius: 34px;
+  pointer-events: none;
+  box-shadow: inset 0 0 55px rgba(197, 160, 89, 0.05);
+}
+
+.hero { text-align: center; padding: 40px 10px 26px; }
+.hero .mini { font-size: 11px; letter-spacing: 4px; color: var(--muted); text-transform: uppercase; }
+.hero h1 { font-size: clamp(42px, 12vw, 76px); font-weight: 400; color: var(--gold2); line-height: 1; margin: 17px 0 8px; }
+.hero .amp { font-size: 20px; color: var(--beige); }
+.hero p { color: var(--muted); line-height: 1.8; margin: 18px auto; max-width: 500px; }
+
+.card {
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: linear-gradient(145deg, rgba(36, 8, 12, 0.75), rgba(18, 3, 5, 0.75));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 25px;
+  margin: 16px 0;
+  box-shadow: 0 18px 55px rgba(0,0,0,.5);
+}
+
+.section-title { text-align: center; color: var(--gold2); font-size: 22px; font-weight: 400; margin: 0 0 18px; }
+.hint { text-align: center; color: var(--muted); font-size: 13px; margin: 0 0 18px; }
+
+.scratch-wrap { display: grid; place-items: center; }
+.scratch {
+  width: min(420px, 100%);
+  height: 220px;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--gold);
+  touch-action: none;
+  background: #f5f0eb;
+  color: #120305;
+  display: grid;
+  place-items: center;
+}
+
+.reveal {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  background: linear-gradient(135deg, #f5f0eb, #e5c983);
+  z-index: 1;
+  color: #120305;
+}
+
+.reveal small { display: block; letter-spacing: 3px; text-transform: uppercase; font-size: 10px; margin-bottom: 12px; color: #3d0e14; }
+.reveal strong { font-size: 38px; font-weight: 400; letter-spacing: 3px; color: #120305; }
+.reveal span { display: block; margin-top: 9px; font-size: 14px; color: #3d0e14; }
+
+#scratchCanvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; cursor: crosshair; }
+.reveal.done + #scratchCanvas { display: none; }
+
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.info-btn {
+  border: 1px solid var(--line);
+  background: rgba(26, 5, 7, 0.75);
+  color: var(--beige);
+  border-radius: 18px;
+  padding: 20px 10px;
+  text-align: center;
+  cursor: pointer;
+  min-height: 125px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: border-color .3s, background .3s;
+}
+
+.info-btn:hover { border-color: var(--gold); background: rgba(45, 10, 15, 0.85); }
+.icon { font-size: 29px; color: var(--gold2); margin-bottom: 9px; }
+.label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+.value { margin-top: 7px; font-size: 16px; line-height: 1.4; color: var(--beige); }
+
+.popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: none;
+  place-items: center;
+  padding: 20px;
+  z-index: 20000;
+}
+
+.popup.open { display: grid; }
+.popup-box {
+  max-width: 460px;
+  width: 100%;
+  background: #24080c;
+  border: 1px solid var(--gold);
+  border-radius: 24px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 25px 90px rgba(0,0,0,.8);
+}
+
+.popup-box h2 { color: var(--gold2); font-weight: 400; margin-top: 0; }
+.close {
+  margin-top: 22px;
+  border: 1px solid var(--gold);
+  background: transparent;
+  color: var(--gold2);
+  border-radius: 999px;
+  padding: 10px 22px;
+  cursor: pointer;
+  transition: background .3s, color .3s;
+}
+.close:hover { background: var(--gold); color: #120305; }
+
+.footer { text-align: center; color: var(--muted); font-size: 13px; line-height: 1.8; margin-top: 35px; }
+.heart { color: var(--gold2); font-size: 18px; }
+
+@media(max-width: 520px) {
+  .info-grid { grid-template-columns: 1fr; }
+  .card { padding: 20px; }
+  .hero { padding-top: 30px; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ROMANTIC ANIMATED BACKGROUND SCENE -->
+  <div class="romantic-background">
+    <svg class="romantic-svg" viewBox="0 0 800 1000" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Moon Glow Filter -->
+        <filter id="moonGlow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="12" result="blur" />
+          <feComposite in="SourceGraphic" in2="blur" operator="over" />
+        </filter>
+        
+        <!-- Center Heart Glow -->
+        <filter id="heartGlow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="4" result="blur" />
+          <feComposite in="SourceGraphic" in2="blur" operator="over" />
+        </filter>
+
+        <!-- Moon & Atmosphere Gradients -->
+        <radialGradient id="moonGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#fff8e7" />
+          <stop offset="70%" stop-color="#e5c983" />
+          <stop offset="100%" stop-color="#c5a059" />
+        </radialGradient>
+
+        <radialGradient id="skyGlow" cx="50%" cy="30%" r="60%">
+          <stop offset="0%" stop-color="#7a1c2e" stop-opacity="0.5" />
+          <stop offset="50%" stop-color="#3d0e14" stop-opacity="0.3" />
+          <stop offset="100%" stop-color="#120305" stop-opacity="0" />
+        </radialGradient>
+
+        <!-- Couple Gradient for Subtle Dimensional Lighting -->
+        <linearGradient id="coupleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#2a0a10" />
+          <stop offset="50%" stop-color="#150406" />
+          <stop offset="100%" stop-color="#0a0203" />
+        </linearGradient>
+
+        <!-- Edge Light Gradient for Silhouette Contour -->
+        <linearGradient id="rimLight" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#e5c983" stop-opacity="0.8" />
+          <stop offset="100%" stop-color="#c5a059" stop-opacity="0.1" />
+        </linearGradient>
+      </defs>
+
+      <!-- Atmospheric Radial Glow -->
+      <rect width="800" height="1000" fill="url(#skyGlow)" />
+
+      <!-- Twinkling Stars -->
+      <g id="stars">
+        <circle cx="150" cy="120" r="2" fill="#e5c983" class="star" style="--duration:2.5s; --delay:0s;" />
+        <circle cx="280" cy="80" r="1.5" fill="#ffffff" class="star" style="--duration:4s; --delay:1s;" />
+        <circle cx="650" cy="140" r="2.5" fill="#e5c983" class="star" style="--duration:3s; --delay:0.5s;" />
+        <circle cx="720" cy="220" r="1.5" fill="#ffffff" class="star" style="--duration:3.5s; --delay:1.5s;" />
+        <circle cx="100" cy="250" r="2" fill="#e5c983" class="star" style="--duration:2.8s; --delay:0.2s;" />
+        <circle cx="550" cy="90" r="1.8" fill="#ffffff" class="star" style="--duration:3.2s; --delay:0.8s;" />
+        <circle cx="380" cy="160" r="1.2" fill="#e5c983" class="star" style="--duration:4.5s; --delay:2s;" />
+      </g>
+
+      <!-- Glowing Large Moon -->
+      <g class="anim-moon">
+        <circle cx="400" cy="380" r="160" fill="url(#moonGrad)" filter="url(#moonGlow)" />
+      </g>
+
+      <!-- Subtle Horizon Hill Silhouette -->
+      <path d="M 0 820 Q 250 780 400 800 T 800 810 L 800 1000 L 0 1000 Z" fill="#0a0203" />
+      <path d="M 0 850 Q 400 810 800 860 L 800 1000 L 0 1000 Z" fill="#120406" opacity="0.7" />
+
+      <!-- Glowing Heart Above the Couple -->
+      <g class="anim-center-heart" filter="url(#heartGlow)">
+        <path d="M 400 520 C 400 510 385 495 370 510 C 350 530 400 560 400 560 C 400 560 450 530 430 510 C 415 495 400 510 400 520 Z" fill="#e5c983" />
+      </g>
+
+      <!-- Prominent Animated Romantic Couple -->
+      <g class="anim-couple">
+        <!-- Groom / Male Silhouette -->
+        <path d="M 320 840 
+                 C 320 780 330 730 335 680 
+                 C 338 650 340 620 348 590 
+                 C 352 575 358 565 370 560 
+                 C 382 555 392 565 395 580 
+                 C 398 600 395 640 395 680 
+                 C 395 730 400 780 400 840 Z" fill="url(#coupleGrad)" stroke="url(#rimLight)" stroke-width="0.7" />
+        
+        <!-- Male Head -->
+        <circle cx="370" cy="545" r="22" fill="url(#coupleGrad)" stroke="url(#rimLight)" stroke-width="0.7" />
+
+        <!-- Bride / Female Silhouette -->
+        <path d="M 380 840 
+                 C 385 780 395 720 405 670 
+                 C 410 640 415 600 422 580 
+                 C 426 570 433 568 442 575 
+                 C 450 582 452 595 448 615 
+                 C 440 650 455 700 475 760 
+                 C 485 790 495 820 500 840 Z" fill="url(#coupleGrad)" stroke="url(#rimLight)" stroke-width="0.7" />
+        
+        <!-- Female Head (Leaning slightly inward) -->
+        <circle cx="430" cy="558" r="19" fill="url(#coupleGrad)" stroke="url(#rimLight)" stroke-width="0.7" />
+
+        <!-- Embraced Hands / Center Connection Overlay -->
+        <path d="M 375 640 Q 400 645 425 635" stroke="url(#rimLight)" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.6" />
+      </g>
+    </svg>
+  </div>
+
+  <div class="noise"></div>
+  <div class="particles" id="particles"></div>
+
+  <!-- CURTAIN STAGE -->
+  <div class="curtain-stage" id="curtainStage" onclick="triggerCurtain()">
+    <div class="curtain-top-bar"></div>
+    <div class="curtain left"></div>
+    <div class="curtain right"></div>
+    <div class="curtain-center">
+      <div class="curtain-orn">✦</div>
+      <div class="curtain-label">Invitation Card</div>
+      <div class="curtain-names">Lahiru <span>&amp;</span> Poornima</div>
+      <div class="touch-hint">Tap anywhere to open ✨</div>
+    </div>
+  </div>
+
+  <!-- MAIN INVITATION CONTENT WRAPPER -->
+  <div class="content-wrapper">
+    <section class="cover" id="cover">
+      <div class="cover-card">
+        <div class="orn">✦ ✦ ✦</div>
+        <div class="eyebrow">The Beginning of a Special Moment</div>
+        <div class="names">Lahiru<span class="and">&amp;</span>Poornima</div>
+        <div class="sub">We cordially invite you to our engagement ceremony.</div>
+        <button class="open-btn" id="openBtn">Tap to Start 💍</button>
+      </div>
+    </section>
+
+    <main class="invite" id="invite">
+      <section class="hero">
+        <div class="mini">With love and joy</div>
+        <h1>Lahiru <span class="amp">&amp;</span> Poornima</h1>
+        <p>We deeply appreciate your presence on this special day as we celebrate a new chapter in our lives.</p>
+      </section>
+
+      <section class="card">
+        <h2 class="section-title">Our Special Day</h2>
+        <p class="hint">Scratch the card to see the date ✨</p>
+        <div class="scratch-wrap">
+          <div class="scratch" id="scratch">
+            <div class="reveal" id="reveal">
+              <div><small>Our Special Day</small><strong>25 · 10 · 2026</strong><span>Sunday</span></div>
+            </div>
+            <canvas id="scratchCanvas"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2 class="section-title">Details</h2>
+        <p class="hint">Tap below for more details ✨</p>
+        <div class="info-grid">
+          <button class="info-btn" data-pop="time">
+            <div class="icon">◷</div><div class="label">Time</div><div class="value">09:30 AM</div>
+          </button>
+          <a class="info-btn" href="https://maps.app.goo.gl/fiTQ3iPom3vvuNzd8" target="_blank" rel="noopener noreferrer">
+            <div class="icon">⌖</div><div class="label">Location</div><div class="value">New Goodies Kitchen</div>
+          </a>
+          <button class="info-btn" data-pop="ring">
+            <div class="icon">♢</div><div class="label">For You</div><div class="value">A little message</div>
+          </button>
+        </div>
+      </section>
+
+      <section class="card" style="text-align:center">
+        <div class="orn">✦</div>
+        <h2 class="section-title">An Unforgettable Moment</h2>
+        <p class="hint">Tap • Scratch • Discover</p>
+        <p style="color:var(--muted);line-height:1.8">Your presence will make this beautiful moment even more meaningful.</p>
+      </section>
+
+      <div class="footer">With Love, <span class="heart">♥</span> Lahiru &amp; Poornima<br>Looking forward to your arrival.</div>
+    </main>
+  </div>
+
+  <div class="popup" id="popup">
+    <div class="popup-box">
+      <h2 id="popTitle"></h2>
+      <div id="popText" style="color:var(--muted);line-height:1.8"></div>
+      <button class="close" id="close">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const cover = document.getElementById('cover');
+const invite = document.getElementById('invite');
+const curtainStage = document.getElementById('curtainStage');
+
+function triggerCurtain(){
+  curtainStage.classList.add('opened');
+  setTimeout(() => { curtainStage.style.opacity = '0'; }, 1200);
+  setTimeout(() => { 
+    curtainStage.style.visibility = 'hidden';
+    curtainStage.style.display = 'none';
+  }, 2000);
+}
+
+document.getElementById('openBtn').addEventListener('click', () => {
+  cover.classList.add('hide');
+  setTimeout(() => { 
+    invite.classList.add('show'); 
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }, 450);
+});
+
+// Particle generation for floating hearts
+const particles = document.getElementById('particles');
+for(let i = 0; i < 22; i++){
+  const p = document.createElement('i'); 
+  p.className = 'p'; 
+  p.textContent = '♥';
+  p.style.left = (Math.random() * 100) + '%';
+  p.style.animationDelay = (Math.random() * 8) + 's';
+  p.style.animationDuration = (7 + Math.random() * 7) + 's';
+  p.style.fontSize = (24 + Math.random() * 22) + 'px';
+  p.style.color = '#e5c983';
+  particles.appendChild(p);
+}
+
+// Scratch canvas logic
+const canvas = document.getElementById('scratchCanvas');
+const box = document.getElementById('scratch');
+const reveal = document.getElementById('reveal');
+
+function setupCanvas(){
+  if(!canvas || !box) return;
+  const r = box.getBoundingClientRect();
+  const d = Math.min(window.devicePixelRatio || 1, 2);
+  canvas.width = r.width * d; 
+  canvas.height = r.height * d;
+  const c = canvas.getContext('2d'); 
+  c.setTransform(d, 0, 0, d, 0, 0);
+  c.fillStyle = '#c5a059'; 
+  c.fillRect(0, 0, r.width, r.height);
+  c.fillStyle = 'rgba(255,255,255,.25)';
+  for(let x = 0; x < r.width; x += 26) {
+    for(let y = 0; y < r.height; y += 26) {
+      c.beginPath(); 
+      c.arc(x, y, 1.2, 0, Math.PI * 2); 
+      c.fill();
+    }
+  }
+  c.globalCompositeOperation = 'destination-out';
+}
+
+setupCanvas(); 
+window.addEventListener('resize', setupCanvas);
+
+let scratching = false, last = null;
+
+function scratchAt(e){
+  if(!scratching) return;
+  const r = canvas.getBoundingClientRect();
+  const x = ((e.clientX !== undefined) ? e.clientX : e.touches?.[0]?.clientX) - r.left;
+  const y = ((e.clientY !== undefined) ? e.clientY : e.touches?.[0]?.clientY) - r.top;
+  const c = canvas.getContext('2d'); 
+  c.lineCap = 'round'; 
+  c.lineJoin = 'round'; 
+  c.lineWidth = 34;
+  c.beginPath(); 
+  if(last) c.moveTo(last.x, last.y); 
+  else c.moveTo(x, y); 
+  c.lineTo(x, y); 
+  c.stroke(); 
+  last = {x, y};
+}
+
+function stopScratch(){
+  scratching = false;
+  last = null;
+  checkScratch();
+}
+
+canvas.addEventListener('pointerdown', e => { scratching = true; last = null; scratchAt(e); });
+canvas.addEventListener('pointermove', scratchAt); 
+window.addEventListener('pointerup', stopScratch);
+
+function checkScratch(){
+  const c = canvas.getContext('2d');
+  const d = c.getImageData(0, 0, canvas.width, canvas.height).data;
+  let clear = 0; 
+  for(let i = 3; i < d.length; i += 4) {
+    if(d[i] < 30) clear++;
+  }
+  if(clear / (d.length / 4) > 0.48){
+    canvas.style.opacity = '0'; 
+    setTimeout(() => canvas.remove(), 250);
+  }
+}
+
+// Popups data and logic
+const data = {
+ time: ['Engagement Time', 'Our auspicious engagement moment will take place at 11:15 AM.'],
+ ring: ['A Message From Us', 'A beautiful beginning of two hearts... Join us to celebrate this special day of ours. ♥']
+};
+
+const popup = document.getElementById('popup');
+document.querySelectorAll('.info-btn[data-pop]').forEach(b => {
+  b.onclick = () => {
+    const [t, x] = data[b.dataset.pop]; 
+    document.getElementById('popTitle').textContent = t; 
+    document.getElementById('popText').textContent = x; 
+    popup.classList.add('open');
+  };
+});
+
+document.getElementById('close').onclick = () => popup.classList.remove('open');
+popup.addEventListener('click', e => { if(e.target === popup) popup.classList.remove('open'); });
+</script>
+</body>
+</html>
